@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Web Dasturlash Imtihoni</title>
+    <link rel="icon" href="/favicon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            touch-action: pan-y;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .logo{
+            width: 100px;
+            height: 100px;
+            display: flex;
+            margin-left: 400px;
+        }
+        .container ::-webkit-scrollbar{
+            background-color: #135ec0;
+            border-radius: 100px;
+        }
+        .container {
+            background-color: #ccc;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .container h1{
+            width: 400px;
+            margin-top: 10px;
+            color: #60a4fa;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #313030;
+        }
+        input {
+            width: 570px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #60a4fa;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn{
+            text-decoration: none;
+            color: #135ec0;
+            display: flex;
+            margin-left: 220px;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+        .btn:hover{
+            text-decoration: underline;
+        }
+    </style>    
+    <script>
+        function submitExam() {
+            const answers = [];
+            for (let i = 1; i <= 30; i++) {
+                const answer = document.querySelector(`#q${i}`).value || 'Javob berilmagan';
+                answers.push(`Q${i}: ${answer}`);
+            }
+
+            const fullname = localStorage.getItem('fullname');
+            const days = localStorage.getItem('days');
+            const time = localStorage.getItem('time');
+            const lessonType = localStorage.getItem('lessonType');
+            const phone = localStorage.getItem('phone');
+
+            const message = `👤 Ismi: ${fullname}\n` +
+                            `📅 Dars kunlari: ${days}\n` +
+                            `⏰ Dars vaqti: ${time}\n` +
+                            `📚 Dars turi: ${lessonType}\n` +
+                            `📞 Telefon raqami: ${phone}\n` +
+                            `\n📝 Savollar javoblari:\n${answers.join('\n')}`;
+
+            const TELEGRAM_BOT_API = 'https://api.telegram.org/bot7698622784:AAEzoqkcFC9DCN7ovExLw1V7gFqlhZx_3Ik/sendMessage';
+            const CHAT_ID = '6206221012';
+            const url = `${TELEGRAM_BOT_API}?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    alert('Imthon natijalari yuborildi✅');
+                    for (let i = 1; i <= 30; i++) {
+                        document.querySelector(`#q${i}`).value = '';
+                    }
+                    localStorage.clear();
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 0);
+                })
+                .catch(error => alert('Xatolik yuz berdi❌'));
+
+            return false;
+        }
+    </script>
+    <script>
+         document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+
+    // Klaviatura tugmalarini bloklash
+    document.addEventListener("keydown", function (e) {
+      // Ctrl+U ni bloklash
+      if (e.ctrlKey && e.key === "u") {
+        e.preventDefault();
+        alert("Bu funksiyaga ruxsat yo'q!");
+      }
+      // F12 (Developer Tools) ni bloklash
+      if (e.key === "F12") {
+        e.preventDefault();
+        alert("Bu funksiyaga ruxsat yo'q!");
+      }
+      // Ctrl+Shift+I (Inspector)
+      if (e.ctrlKey && e.shiftKey && e.key === "I") {
+        e.preventDefault();
+        alert("Bu funksiyaga ruxsat yo'q!");
+      }
+      // Ctrl+Shift+J (Console)
+      if (e.ctrlKey && e.shiftKey && e.key === "J") {
+        e.preventDefault();
+        alert("Bu funksiyaga ruxsat yo'q!");
+      }
+    });
+
+    // Brauzer devtools ochilganini aniqlash
+    (function () {
+      const element = new Image();
+      Object.defineProperty(element, 'id', {
+        get: function () {
+          alert("Developer Tools ishlatilmoqda!");
+          window.location.href = "about:blank"; // Yangi bo‘sh sahifaga yo‘naltirish
+        }
+      });
+      console.log(element);
+    })();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Frontend Web Dasturlash Imtihoni</h1>
+        <form onsubmit="return submitExam()">
+            <div id="questions">
+                <label for="q1">1. HTML nima?</label>
+                <input type="text" id="q1" placeholder="Javobingiz">
+
+                <label for="q2">2. CSS qanday maqsadda ishlatiladi?</label>
+                <input type="text" id="q2" placeholder="Javobingiz">
+
+                <label for="q3">3. HTMLda h1 elementi qanday maqsadda ishlatiladi?</label>
+                <input type="text" id="q3" placeholder="Javobingiz">
+
+                <label for="q4">4. JavaScript nima uchun ishlatiladi?</label>
+                <input type="text" id="q4" placeholder="Javobingiz">
+
+                <label for="q5">5. Flexboxning asosiy xususiyati nima?</label>
+                <input type="text" id="q5" placeholder="Javobingiz">
+
+                <label for="q6">6. HTMLda "div" elementi nima?</label>
+                <input type="text" id="q6" placeholder="Javobingiz">
+
+                <label for="q7">7. CSSda "color" xususiyati nimaga xizmat qiladi?</label>
+                <input type="text" id="q7" placeholder="Javobingiz">
+
+                <label for="q8">8. JavaScriptda "console.log" qachon ishlatiladi?</label>
+                <input type="text" id="q8" placeholder="Javobingiz">
+
+                <label for="q9">9. HTMLda "img" elementi qanday ishlatiladi?</label>
+                <input type="text" id="q9" placeholder="Javobingiz">
+
+                <label for="q10">10. CSSda "margin" va "padding" orasidagi farq nima?</label>
+                <input type="text" id="q10" placeholder="Javobingiz">
+
+                <label for="q11">11. HTMLda link yaratish uchun qaysi element ishlatiladi?</label>
+                <input type="text" id="q11" placeholder="Javobingiz">
+
+                <label for="q12">12. JavaScriptda "var", "let" va "const" o'rtasidagi farq nima?</label>
+                <input type="text" id="q12" placeholder="Javobingiz">
+
+                <label for="q13">13. CSSda "position" xususiyati nima uchun ishlatiladi?</label>
+                <input type="text" id="q13" placeholder="Javobingiz">
+
+                <label for="q14">14. HTML va CSSni qanday bog'lash mumkin?</label>
+                <input type="text" id="q14" placeholder="Javobingiz">
+
+                <label for="q15">15. JavaScriptda "function" qanday e'lon qilinadi?</label>
+                <input type="text" id="q15" placeholder="Javobingiz">
+
+                <label for="q16">16. Flexboxda "justify-content" xususiyati nimani boshqaradi?</label>
+                <input type="text" id="q16" placeholder="Javobingiz">
+
+                <label for="q17">17. HTMLda "table" elementi nima?</label>
+                <input type="text" id="q17" placeholder="Javobingiz">
+
+                <label for="q18">18. CSSda "hover" pseudoklassi nima qiladi?</label>
+                <input type="text" id="q18" placeholder="Javobingiz">
+
+                <label for="q19">19. JavaScriptda "addEventListener" qanday ishlatiladi?</label>
+                <input type="text" id="q19" placeholder="Javobingiz">
+
+                <label for="q20">20. CSSda "z-index" xususiyati nimaga xizmat qiladi?</label>
+                <input type="text" id="q20" placeholder="Javobingiz">
+
+                <label for="q21">21. HTML5da "audio" elementi nima uchun ishlatiladi?</label>
+                <input type="text" id="q21" placeholder="Javobingiz">
+
+                <label for="q22">22. CSSda "media query" nima va qachon ishlatiladi?</label>
+                <input type="text" id="q22" placeholder="Javobingiz">
+
+                <label for="q23">23. JavaScriptda massivlarni qanday e'lon qilamiz?</label>
+                <input type="text" id="q23" placeholder="Javobingiz">
+
+                <label for="q24">24. CSSda "grid" tizimi nima?</label>
+                <input type="text" id="q24" placeholder="Javobingiz">
+
+                <label for="q25">25. HTMLda "form" elementi nima uchun ishlatiladi?</label>
+                <input type="text" id="q25" placeholder="Javobingiz">
+
+                <label for="q26">26. JavaScriptda "if-else" qanday ishlaydi?</label>
+                <input type="text" id="q26" placeholder="Javobingiz">
+
+                <label for="q27">27. CSSda "transition" xususiyati nima uchun ishlatiladi?</label>
+                <input type="text" id="q27" placeholder="Javobingiz">
+
+                <label for="q28">28. HTMLda "button" elementi qanday ishlatiladi?</label>
+                <input type="text" id="q28" placeholder="Javobingiz">
+
+                <label for="q29">29. JavaScriptda "DOM" nimani anglatadi?</label>
+                <input type="text" id="q29" placeholder="Javobingiz">
+
+                <label for="q30">30. CSSda "overflow" xususiyati qanday ishlatiladi?</label>
+                <input type="text" id="q30" placeholder="Javobingiz">
+            </div>
+            <button type="submit">Yakunlash</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ziyokor eksamin bosh sahifasi</title>
+    <link rel="icon" href="./favicon.png">
+    <style>
+        body {
+            overflow-x: hidden;
+            touch-action: pan-y; 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        ::selection{
+            background-color: #60A4FA;
+            color: #000000;
+        }
+        .container h1 span{
+            color: #60A4FA;
+        }
+        .container {
+            background-color: #ccc;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        #fullname{
+            width: 376px;
+        }
+        #phone{
+            width: 376px;
+        }
+        input, select {
+            width: 400px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .logo{
+            width: 100px;height: 100px;
+        }
+        button {
+            background-color: #60A4FA;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        option {
+            background-color: #ccc;
+            color: #000000;
+        }
+        select::-webkit-scrollbar {
+            background-color: #ccc;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                max-width: 90%;
+            }
+            input {
+                padding: 5px;
+                width: 10px;
+            }
+            button {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+                max-width: 95%;
+            }
+            input, button {
+                font-size: 10px;
+                padding: 8px;
+            }
+        }
+    </style>
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+            
+            const fullname = document.querySelector('#fullname').value;
+            const days = document.querySelector('#days').value;
+            const time = document.querySelector('#time').value;
+            const lessonType = document.querySelector('#lessonType').value;
+            const phone = document.querySelector('#phone').value;
+
+            if (!fullname || !days || !time || !lessonType || !phone) {
+                alert("Iltimos, barcha maydonlarni to'ldiring!");
+                return;
+            }
+
+            localStorage.setItem('fullname', fullname);
+            localStorage.setItem('days', days);
+            localStorage.setItem('time', time);
+            localStorage.setItem('lessonType', lessonType);
+            localStorage.setItem('phone', phone);
+
+            setTimeout(() => {
+                if (lessonType === "Ingiliz-tili-kids") {
+                    window.location.href = 'exam.html';
+                } else if (lessonType === "Ingiliz-tili-ortacha") {
+                    window.location.href = 'exam1.html';
+                }
+                if (lessonType === "Matematika-imthoni") {
+                    window.location.href = 'math.html';
+                }
+                if (lessonType === "Web-dasturlash-FrontEnd-imthoni") {
+                    window.location.href = 'dasturlash.html';
+                }
+            }, 0);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="./favicon.png" alt="">
+        <h1><span>Ziyokor</span> o'quv markazining barcha imtihonlari</h1>
+        <form onsubmit="submitForm(event)">
+            <label for="fullname">Ism familiya:</label>
+            <input type="text" id="fullname" placeholder="F.I.O" required>
+            <label for="days">Dars kunlaringiz:</label>
+            <select id="days" required>
+                <option value="">Dars kunlari tanlang</option>
+                <option value="dushanba-chorshanba">Dushanba - Chorshanba</option>
+                <option value="seshanba-payshanba">Seshanba - Payshanba</option>
+                <option value="sharshamba-juma">Chorshanba - Juma</option>
+            </select>
+            <label for="time">Dars vaqtini tanlang:</label>
+            <select id="time" required>
+                 <option value="08:00 - 10:00">08:00 - 10:00</option>
+                <option value="10:00 - 12:00">10:00 - 12:00</option>
+                <option value="12:00 - 14:00">12:00 - 14:00</option>
+                <option value="14:00 - 16:00">14:00 - 16:00</option>
+                <option value="16:00 - 18:00">16:00 - 18:00</option>
+                <option value="18:00 - 20:00">18:00 - 20:00</option>
+            </select>
+            <label for="lessonType">Dars turi:</label>
+            <select id="lessonType" required>
+                <option value="">Dars turini tanlang</option>
+                <option value="Ingiliz-tili-kids">Ingiliz tili kids imthon</option>
+                <option value="Ingiliz-tili-ortacha">Ingliz tili ortacha imthon</option>
+                <option value="Matematika-imthoni">Matematika imthon</option>
+                <option value="Web-dasturlash-FrontEnd-imthoni">Web dasturlash FrontEnd imthon</option>
+            </select>
+            <label for="phone">Telefon raqamingiz:</label>
+            <input type="tel" id="phone" placeholder="+998" required>
+            <button type="submit">Imtihondi boshlash</button>
+        </form>
+    </div>
+</body>
+</html>

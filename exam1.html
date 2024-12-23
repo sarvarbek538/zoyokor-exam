@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingliz tili ortacha imtihoni</title>
+    <link rel="icon" href="/favicon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            touch-action: pan-y;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .logo{
+            width: 100px;
+            height: 100px;
+            display: flex;
+            margin-left: 400px;
+        }
+        .container ::-webkit-scrollbar{
+            background-color: #135ec0;
+            border-radius: 100px;
+        }
+        .container {
+            background-color: #ccc;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .container h1{
+            margin-top: -60px;
+            color: #60a4fa;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #313030;
+        }
+        input {
+            width: 570px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #60a4fa;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn{
+            text-decoration: none;
+            color: #135ec0;
+            display: flex;
+            margin-left: 220px;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+        .btn:hover{
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+              function submitExam() {
+            const answers = [];
+            for (let i = 1; i <= 30; i++) {
+                const answer = document.querySelector(`#q${i}`).value || 'Javob berilmagan';
+                answers.push(`Q${i}: ${answer}`);
+            }
+
+            const fullname = localStorage.getItem('fullname');
+            const days = localStorage.getItem('days');
+            const time = localStorage.getItem('time');
+            const lessonType = localStorage.getItem('lessonType');
+            const phone = localStorage.getItem('phone');
+
+            const message = `👤 Ismi: ${fullname}\n` +
+                            `📅 Dars kunlari: ${days}\n` +
+                            `⏰ Dars vaqti: ${time}\n` +
+                            `📚 Dars turi: ${lessonType}\n` +
+                            `📞 Telefon raqami: ${phone}\n` +
+                            `\n📝 Savollar javoblari:\n${answers.join('\n')}`;
+
+            const TELEGRAM_BOT_API = 'https://api.telegram.org/bot7698622784:AAEzoqkcFC9DCN7ovExLw1V7gFqlhZx_3Ik/sendMessage';
+            const CHAT_ID = '6206221012';
+            const url = `${TELEGRAM_BOT_API}?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    alert('Imthon natijalari yuborildi✅');
+                    // O'chirish va bosh sahifaga qaytarish
+                    for (let i = 1; i <= 30; i++) {
+                        document.querySelector(`#q${i}`).value = '';
+                    }
+                    localStorage.clear();
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 0);
+                })
+                .catch(error => alert('Xatolik yuz berdi❌'));
+
+            return false; // Sahifani yangilamaslik
+        }
+        
+    </script>
+      <script>
+        // O'ng tugmachani o‘chirish (context menu)
+        document.addEventListener("contextmenu", function (e) {
+          e.preventDefault();
+        });
+    
+        // Klaviatura tugmalarini bloklash
+        document.addEventListener("keydown", function (e) {
+          // Esc tugmasini bloklash
+          if (e.key === "Escape") {
+            e.preventDefault();
+            alert("Bu tugma ishlatilmasligi kerak!");
+          }
+          // Ctrl+U ni bloklash
+          if (e.ctrlKey && e.key === "u") {
+            e.preventDefault();
+            alert("Bu funksiyaga ruxsat yo'q!");
+          }
+          // F12 (Developer Tools) ni bloklash
+          if (e.key === "F12") {
+            e.preventDefault();
+            alert("Bu funksiyaga ruxsat yo'q!");
+          }
+          // Ctrl+Shift+I (Inspector)
+          if (e.ctrlKey && e.shiftKey && e.key === "I") {
+            e.preventDefault();
+            alert("Bu funksiyaga ruxsat yo'q!");
+          }
+          // Ctrl+Shift+J (Console)
+          if (e.ctrlKey && e.shiftKey && e.key === "J") {
+            e.preventDefault();
+            alert("Bu funksiyaga ruxsat yo'q!");
+          }
+        });
+    
+        // Brauzer devtools ochilganini aniqlash
+        (function () {
+          const element = new Image();
+          Object.defineProperty(element, 'id', {
+            get: function () {
+              alert("Developer Tools ishlatilmoqda!");
+              window.location.href = "about:blank"; // Yangi bo‘sh sahifaga yo‘naltirish
+            }
+          });
+          console.log(element);
+        })();
+      </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Ingliz Tili Imtihoni</h1>
+        <form onsubmit="return submitExam()">
+            <div id="questions">
+                <label for="q1">1. What is your name?</label>
+                <input type="text" id="q1" placeholder="Your answer">
+                
+                <label for="q2">2. How old are you?</label>
+                <input type="text" id="q2" placeholder="Your answer">
+                
+                <label for="q3">3. What color is the sky?</label>
+                <input type="text" id="q3" placeholder="Your answer">
+                
+                <label for="q4">4. What is the first letter of the alphabet?</label>
+                <input type="text" id="q4" placeholder="Your answer">
+                
+                <label for="q5">5. What sound does a dog make?</label>
+                <input type="text" id="q5" placeholder="Your answer">
+                
+                <label for="q6">6. How many fingers do you have?</label>
+                <input type="text" id="q6" placeholder="Your answer">
+                
+                <label for="q7">7. What is your favorite color?</label>
+                <input type="text" id="q7" placeholder="Your answer">
+                
+                <label for="q8">8. What do you eat for breakfast?</label>
+                <input type="text" id="q8" placeholder="Your answer">
+                
+                <label for="q9">9. Can you name the days of the week?</label>
+                <input type="text" id="q9" placeholder="Your answer">
+                
+                <label for="q10">10. What is 2 + 2?</label>
+                <input type="text" id="q10" placeholder="Your answer">
+                
+                <label for="q11">11. What is the opposite of "hot"?</label>
+                <input type="text" id="q11" placeholder="Your answer">
+                
+                <label for="q12">12. What do you call a baby cat?</label>
+                <input type="text" id="q12" placeholder="Your answer">
+                
+                <label for="q13">13. Can you name three fruits?</label>
+                <input type="text" id="q13" placeholder="Your answer">
+                
+                <label for="q14">14. What is the color of a banana?</label>
+                <input type="text" id="q14" placeholder="Your answer">
+                
+                <label for="q15">15. How many legs does a spider have?</label>
+                <input type="text" id="q15" placeholder="Your answer">
+                
+                <label for="q16">16. What is the name of the planet we live on?</label>
+                <input type="text" id="q16" placeholder="Your answer">
+                
+                <label for="q17">17. What do you do before you sleep?</label>
+                <input type="text" id="q17" placeholder="Your answer">
+                
+                <label for="q18">18. What animal says "moo"?</label>
+                <input type="text" id="q18" placeholder="Your answer">
+                
+                <label for="q19">19. Can you count to ten in English?</label>
+                <input type="text" id="q19" placeholder="Your answer">
+                
+                <label for="q20">20. What do you wear on your feet?</label>
+                <input type="text" id="q20" placeholder="Your answer">
+                
+                <label for="q21">21. What do you drink when you are thirsty?</label>
+                <input type="text" id="q21" placeholder="Your answer">
+                
+                <label for="q22">22. How many sides does a triangle have?</label>
+                <input type="text" id="q22" placeholder="Your answer">
+                
+                <label for="q23">23. What do you use to write on paper?</label>
+                <input type="text" id="q23" placeholder="Your answer">
+                
+                <label for="q24">24. What is the opposite of "day"?</label>
+                <input type="text" id="q24" placeholder="Your answer">
+                
+                <label for="q25">25. Can you spell the word "apple"?</label>
+                <input type="text" id="q25" placeholder="Your answer">
+                
+                <label for="q26">26. What do you see in the sky at night?</label>
+                <input type="text" id="q26" placeholder="Your answer">
+                
+                <label for="q27">27. What is the name of the season when it snows?</label>
+                <input type="text" id="q27" placeholder="Your answer">
+                
+                <label for="q28">28. What sound does a bird make?</label>
+                <input type="text" id="q28" placeholder="Your answer">
+                
+                <label for="q29">29. What do you use to brush your teeth?</label>
+                <input type="text" id="q29" placeholder="Your answer">
+                
+                <label for="q30">30. Can you say the alphabet from A to Z?</label>
+                <input type="text" id="q30" placeholder="Your answer">
+            </div>
+            <button type="submit">Yakunlash</button>
+        </form>
+    </div>
+</body>
+</html>
